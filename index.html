@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marca Jogo — Natal</title>
+  <style>
+    :root{
+      --red:#C62828;
+      --green:#2E7D32;
+      --gold:#D4AF37;
+      --snow:#ffffff;
+      --bg:#0b1b22;
+      --card:#12252d;
+      --text:#e9f2f6;
+      --muted:#a9c3cc;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 80% -10%, #183844 0%, #0b1b22 55%, #09151a 100%);
+      overflow-x:hidden;
+    }
+
+    /* Neve animada */
+    .snow{
+      position:fixed; inset:0; pointer-events:none;
+      background-image:
+        radial-gradient(var(--snow) 1.2px, transparent 1.2px),
+        radial-gradient(var(--snow) 1.2px, transparent 1.2px),
+        radial-gradient(var(--snow) 1.2px, transparent 1.2px);
+      background-size: 600px 600px, 800px 800px, 1000px 1000px;
+      background-position: 0 0, 200px -100px, -100px 200px;
+      animation: snow 18s linear infinite;
+      opacity:.6;
+    }
+    @keyframes snow{
+      0%{background-position: 0 0, 200px -100px, -100px 200px}
+      100%{background-position: 0 600px, 200px 700px, -100px 800px}
+    }
+
+    header{
+      position:sticky; top:0; z-index:10;
+      background: linear-gradient(180deg, rgba(9,21,26,.85) 0%, rgba(9,21,26,.55) 100%);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(212,175,55,.2);
+    }
+    .wrap{max-width:1120px; margin:0 auto; padding:18px}
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:50%;
+      background:
+        conic-gradient(from 0deg, var(--red) 0 120deg, var(--green) 120deg 240deg, var(--gold) 240deg 360deg);
+      box-shadow: 0 0 0 2px rgba(212,175,55,.35), 0 6px 14px rgba(0,0,0,.3);
+      animation: twinkle 3s ease-in-out infinite;
+    }
+    @keyframes twinkle{
+      0%,100%{transform: rotate(0deg) scale(1)}
+      50%{transform: rotate(8deg) scale(1.06)}
+    }
+    .title{font-weight:700; letter-spacing:.2px}
+    .subtitle{color:var(--muted); font-size:.95rem}
+
+    main{padding:26px 0 60px}
+    .grid{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:22px;
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      border:1px solid rgba(212,175,55,.18);
+      border-radius:16px;
+      box-shadow: 0 12px 24px rgba(0,0,0,.28);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0; padding:16px 18px;
+      background: linear-gradient(180deg, rgba(214, 175, 55, .18), transparent 70%);
+      border-bottom:1px solid rgba(212,175,55,.18);
+      font-size:1.1rem; letter-spacing:.3px;
+    }
+    .card .content{padding:18px}
+
+    /* Formulário */
+    form .row{
+      display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:12px;
+    }
+    form .row3{grid-template-columns: 1fr 1fr 1fr}
+    form .row1{grid-template-columns: 1fr}
+    label{font-size:.92rem; color:var(--muted)}
+    input, select, textarea{
+      width:100%; margin-top:6px; padding:12px 12px;
+      background:#0e1f26; color:var(--text);
+      border:1px solid rgba(212,175,55,.22);
+      border-radius:12px; outline:none;
+      transition: border-color .2s, box-shadow .2s, transform .05s;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(212,175,55,.18);
+    }
+    textarea{min-height:76px; resize:vertical}
+    .actions{display:flex; gap:12px; margin-top:6px}
+
+    .btn{
+      display:inline-flex; align-items:center; gap:8px;
+      border:none; cursor:pointer;
+      padding:12px 16px; border-radius:12px; font-weight:600;
+      transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:active{transform: scale(.98)}
+    .btn-primary{
+      background: linear-gradient(90deg, var(--red), var(--green));
+      color:white; box-shadow: 0 8px 18px rgba(198,40,40,.35);
+    }
+    .btn-secondary{
+      background: #14323b; color: var(--text);
+      border:1px solid rgba(212,175,55,.24);
+    }
+
+    /* Lista */
+    .filters{display:grid; grid-template-columns: 1fr 1fr 1fr; gap:12px; margin-bottom:12px}
+    @media (max-width:700px){ .filters{grid-template-columns:1fr} }
+    .match{
+      display:grid; grid-template-columns: 1fr auto; gap:8px;
+      padding:14px; border-bottom:1px dashed rgba(212,175,55,.18);
+    }
+    .match:last-child{border-bottom:none}
+    .match h3{margin:0; font-size:1rem}
+    .meta{color:var(--muted); font-size:.9rem}
+    .tag{
+      display:inline-block; padding:4px 8px; border-radius:999px;
+      font-size:.8rem; background:#15363f; border:1px solid rgba(212,175,55,.18);
+      margin-right:8px;
+    }
+    .status-open{color:#8bd67f}
+    .status-full{color:#f7d27a}
+
+    /* Rodapé festivo */
+    footer{
+      margin-top:24px; padding:18px; text-align:center; color:var(--muted);
+    }
+    .lights{
+      display:flex; justify-content:center; gap:8px; margin-top:10px;
+    }
+    .bulb{
+      width:12px; height:12px; border-radius:50%;
+      box-shadow: 0 0 12px rgba(255,255,255,.5);
+      animation: glow 2.2s ease-in-out infinite;
+    }
+    .bulb:nth-child(1){background:var(--red)}
+    .bulb:nth-child(2){background:var(--green); animation-delay:.4s}
+    .bulb:nth-child(3){background:var(--gold); animation-delay:.8s}
+    .bulb:nth-child(4){background:#59c1ff; animation-delay:1.2s}
+    @keyframes glow{
+      0%,100%{filter:brightness(1)}
+      50%{filter:brightness(1.7)}
+    }
+  </style>
+</head>
+<body>
+  <div class="snow" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="title">Marca Jogo — Especial de Natal</div>
+          <div class="subtitle">Crie partidas e encontre o time adversário. Simples, rápido e festivo.</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- Criar partida -->
+      <div class="card">
+        <h2>Criar partida</h2>
+        <div class="content">
+          <form id="formMatch">
+            <div class="row">
+              <div>
+                <label>Esporte</label>
+                <select id="sport" required>
+                  <option value="Vôlei">Vôlei</option>
+                  <option value="Futebol">Futebol</option>
+                  <option value="Basquete">Basquete</option>
+                  <option value="Futsal">Futsal</option>
+                </select>
+              </div>
+              <div>
+                <label>Seu time</label>
+                <input id="hostTeam" placeholder="Ex.: Águias de Arapongas" required />
+              </div>
+            </div>
+
+            <div class="row">
+              <div>
+                <label>Cidade/Bairro</label>
+                <input id="city" placeholder="Ex.: Arapongas - Centro" required />
+              </div>
+              <div>
+                <label>Local (quadra/campo)</label>
+                <input id="place" placeholder="Ex.: Ginásio Municipal" required />
+              </div>
+            </div>
+
+            <div class="row3">
+              <div>
+                <label>Data</label>
+                <input id="date" type="date" required />
+              </div>
+              <div>
+                <label>Hora</label>
+                <input id="time" type="time" required />
+              </div>
+              <div>
+                <label>Nº de jogadores</label>
+                <input id="players" type="number" min="1" max="50" value="12" />
+              </div>
+            </div>
+
+            <div class="row1">
+              <div>
+                <label>Observações</label>
+                <textarea id="notes" placeholder="Regras, nível, taxa de quadra, etc."></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Publicar partida</button>
+              <button class="btn btn-secondary" type="reset">Limpar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Lista de partidas -->
+      <div class="card">
+        <h2>Partidas abertas</h2>
+        <div class="content">
+          <div class="filters">
+            <div>
+              <label>Filtrar por esporte</label>
+              <select id="filterSport">
+                <option value="">Todos</option>
+                <option>Vôlei</option>
+                <option>Futebol</option>
+                <option>Basquete</option>
+                <option>Futsal</option>
+              </select>
+            </div>
+            <div>
+              <label>Filtrar por cidade</label>
+              <input id="filterCity" placeholder="Ex.: Arapongas" />
+            </div>
+            <div>
+              <label>Status</label>
+              <select id="filterStatus">
+                <option value="">Todos</option>
+                <option value="open">Aberta</option>
+                <option value="full">Fechada</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="list"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>Feito com espírito natalino. Boas partidas e fair play!</div>
+      <div class="lights">
+        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const $ = sel => document.querySelector(sel);
+    const listEl = $('#list');
+
+    const store = {
+      key: 'matches_v1',
+      all(){ return JSON.parse(localStorage.getItem(this.key) || '[]'); },
+      save(arr){ localStorage.setItem(this.key, JSON.stringify(arr)); }
+    };
+
+    function uid(){ return Math.random().toString(36).slice(2) + Date.now().toString(36); }
+
+    function createMatch(data){
+      const all = store.all();
+      all.unshift({...data, id: uid(), createdAt: new Date().toISOString(), guestTeam: null, status: 'open'});
+      store.save(all);
+      renderList();
+    }
+
+    function joinMatch(id, guestTeam){
+      const all = store.all();
+      const i = all.findIndex(m => m.id === id);
+      if(i >= 0){
+        all[i].guestTeam = guestTeam;
+        all[i].status = 'full';
+        store.save(all);
+        renderList();
+      }
+    }
+
+    function cancelJoin(id){
+      const all = store.all();
+      const i = all.findIndex(m => m.id === id);
+      if(i >= 0){
+        all[i].guestTeam = null;
+        all[i].status = 'open';
+        store.save(all);
+        renderList();
+      }
+    }
+
+    function removeMatch(id){
+      const all = store.all().filter(m => m.id !== id);
+      store.save(all);
+      renderList();
+    }
+
+    function fmtDate(d){
+      const dt = new Date(d + 'T00:00:00');
+      return dt.toLocaleDateString('pt-BR', {weekday:'short', day:'2-digit', month:'2-digit'});
+    }
+    function fmtTime(t){
+      const [h,m] = t.split(':');
+      return `${h}:${m}`;
+    }
+
+    function renderList(){
+      const filterSport = $('#filterSport').value.trim();
+      const filterCity = $('#filterCity').value.trim().toLowerCase();
+      const filterStatus = $('#filterStatus').value.trim();
+
+      const all = store.all().filter(m => {
+        const okSport = !filterSport || m.sport === filterSport;
+        const okCity = !filterCity || (m.city || '').toLowerCase().includes(filterCity);
+        const okStatus = !filterStatus || m.status === (filterStatus === 'open' ? 'open' : 'full');
+        return okSport && okCity && okStatus;
+      });
+
+      if(!all.length){
+        listEl.innerHTML = `<p style="color:var(--muted)">Nenhuma partida encontrada. Crie uma partida ao lado ou ajuste os filtros.</p>`;
+        return;
+      }
+
+      listEl.innerHTML = all.map(m => {
+        const statusClass = m.status === 'open' ? 'status-open' : 'status-full';
+        const statusText = m.status === 'open' ? 'Aberta' : 'Fechada';
+        const guest = m.guestTeam ? `vs ${m.guestTeam}` : '— aguardando adversário';
+        return `
+          <div class="match">
+            <div>
+              <h3>${m.sport} • <span class="${statusClass}">${statusText}</span></h3>
+              <div class="meta">
+                <span class="tag">${m.hostTeam}</span>
+                <span class="tag">${guest}</span>
+              </div>
+              <div class="meta">📍 ${m.place} — ${m.city}</div>
+              <div class="meta">🗓️ ${fmtDate(m.date)} • ⏰ ${fmtTime(m.time)} • 👥 ${m.players} jogadores</div>
+              ${m.notes ? `<div class="meta">📝 ${m.notes}</div>` : ''}
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; min-width:220px">
+              ${m.status === 'open' ? `
+                <input id="join_${m.id}" placeholder="Seu time adversário" />
+                <button class="btn btn-primary" onclick="joinMatch('${m.id}', document.getElementById('join_${m.id}').value || 'Time convidado')">Entrar</button>
+              ` : `
+                <button class="btn btn-secondary" onclick="cancelJoin('${m.id}')">Liberar vaga</button>
+              `}
+              <button class="btn btn-secondary" onclick="removeMatch('${m.id}')">Excluir</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Eventos
+    $('#formMatch').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = {
+        sport: $('#sport').value,
+        hostTeam: $('#hostTeam').value.trim(),
+        city: $('#city').value.trim(),
+        place: $('#place').value.trim(),
+        date: $('#date').value,
+        time: $('#time').value,
+        players: parseInt($('#players').value || '0', 10),
+        notes: $('#notes').value.trim()
+      };
+      if(!data.hostTeam || !data.city || !data.place || !data.date || !data.time){
+        alert('Preencha os campos obrigatórios.');
+        return;
+      }
+      createMatch(data);
+      e.target.reset();
+    });
+
+    ['filterSport','filterCity','filterStatus'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', renderList);
+      document.getElementById(id).addEventListener('change', renderList);
+    });
+
+    // Seed inicial
+    if(!store.all().length){
+      createMatch({
+        sport:'Vôlei',
+        hostTeam:'Águias de Arapongas',
+        city:'Arapongas - PR',
+        place:'Ginásio Municipal',
+        date:new Date().toISOString().slice(0,10),
+        time:'19:30',
+        players:12,
+        notes:'Nível intermediário. Levar água e boa energia 🎄'
+      });
+    } else {
+      renderList();
+    }
+  </script>
+</body>
+</html>
